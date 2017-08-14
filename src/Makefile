@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 CXXFLAGS      = -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
-INCPATH       = -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I. -I. -Isrc -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I.
+INCPATH       = -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I. -I. -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I.
 LINK          = g++
 LFLAGS        = -m64 -Wl,-O1
 LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -lQt5Widgets -L/usr/lib/x86_64-linux-gnu -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -41,18 +41,17 @@ MKDIR         = mkdir -p
 
 ####### Output directory
 
-$(ODIR)/%.o: $(SDIR)/%.cpp
-	$(CC) -c $(INC) -o $@ $< $(CFLAGS)
+OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = src/main.cpp \
-		src/mainwindow.cpp \
-		src/myset.cpp \
-		src/parsemd.cpp \
-		src/searcheng.cpp \
-		src/util.cpp \
-		src/webpage.cpp moc_mainwindow.cpp
+SOURCES       = main.cpp \
+		mainwindow.cpp \
+		myset.cpp \
+		parsemd.cpp \
+		searcheng.cpp \
+		util.cpp \
+		webpage.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		myset.o \
@@ -285,7 +284,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/Search_Engine1.0.0 || mkdir -p .tmp/Search_Engine1.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/Search_Engine1.0.0/ && $(COPY_FILE) --parents src/mainwindow.h src/msort.h src/myset.h src/pageparser.h src/searcheng.h src/util.h src/webpage.h .tmp/Search_Engine1.0.0/ && $(COPY_FILE) --parents src/main.cpp src/mainwindow.cpp src/myset.cpp src/parsemd.cpp src/searcheng.cpp src/util.cpp src/webpage.cpp .tmp/Search_Engine1.0.0/ && (cd `dirname .tmp/Search_Engine1.0.0` && $(TAR) Search_Engine1.0.0.tar Search_Engine1.0.0 && $(COMPRESS) Search_Engine1.0.0.tar) && $(MOVE) `dirname .tmp/Search_Engine1.0.0`/Search_Engine1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/Search_Engine1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/Search_Engine1.0.0/ && $(COPY_FILE) --parents mainwindow.h msort.h myset.h pageparser.h searcheng.h util.h webpage.h .tmp/Search_Engine1.0.0/ && $(COPY_FILE) --parents main.cpp mainwindow.cpp myset.cpp parsemd.cpp searcheng.cpp util.cpp webpage.cpp .tmp/Search_Engine1.0.0/ && (cd `dirname .tmp/Search_Engine1.0.0` && $(TAR) Search_Engine1.0.0.tar Search_Engine1.0.0 && $(COMPRESS) Search_Engine1.0.0.tar) && $(MOVE) `dirname .tmp/Search_Engine1.0.0`/Search_Engine1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/Search_Engine1.0.0
 
 
 clean:compiler_clean 
@@ -475,12 +474,12 @@ moc_mainwindow.cpp: /usr/include/qt5/QtWidgets/QWidget \
 		/usr/include/qt5/QtGui/qtextdocument.h \
 		/usr/include/qt5/QtWidgets/QGroupBox \
 		/usr/include/qt5/QtWidgets/qgroupbox.h \
-		src/webpage.h \
-		src/myset.h \
-		src/searcheng.h \
-		src/pageparser.h \
-		src/mainwindow.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) $(INCPATH) -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/mainwindow.h -o moc_mainwindow.cpp
+		webpage.h \
+		myset.h \
+		searcheng.h \
+		pageparser.h \
+		mainwindow.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) $(INCPATH) -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -496,7 +495,7 @@ compiler_clean: compiler_moc_header_clean
 
 ####### Compile
 
-main.o: src/main.cpp src/mainwindow.h \
+main.o: main.cpp mainwindow.h \
 		/usr/include/qt5/QtWidgets/QWidget \
 		/usr/include/qt5/QtWidgets/qwidget.h \
 		/usr/include/qt5/QtGui/qwindowdefs.h \
@@ -661,13 +660,13 @@ main.o: src/main.cpp src/mainwindow.h \
 		/usr/include/qt5/QtGui/qtextdocument.h \
 		/usr/include/qt5/QtWidgets/QGroupBox \
 		/usr/include/qt5/QtWidgets/qgroupbox.h \
-		src/webpage.h \
-		src/myset.h \
-		src/searcheng.h \
-		src/pageparser.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/main.cpp
+		webpage.h \
+		myset.h \
+		searcheng.h \
+		pageparser.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
-mainwindow.o: src/mainwindow.cpp src/mainwindow.h \
+mainwindow.o: mainwindow.cpp mainwindow.h \
 		/usr/include/qt5/QtWidgets/QWidget \
 		/usr/include/qt5/QtWidgets/qwidget.h \
 		/usr/include/qt5/QtGui/qwindowdefs.h \
@@ -832,34 +831,34 @@ mainwindow.o: src/mainwindow.cpp src/mainwindow.h \
 		/usr/include/qt5/QtGui/qtextdocument.h \
 		/usr/include/qt5/QtWidgets/QGroupBox \
 		/usr/include/qt5/QtWidgets/qgroupbox.h \
-		src/webpage.h \
-		src/myset.h \
-		src/searcheng.h \
-		src/pageparser.h \
-		src/msort.h \
+		webpage.h \
+		myset.h \
+		searcheng.h \
+		pageparser.h \
+		msort.h \
 		/usr/include/qt5/QtCore/QString
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o src/mainwindow.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
-myset.o: src/myset.cpp src/myset.h \
-		src/webpage.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o myset.o src/myset.cpp
+myset.o: myset.cpp myset.h \
+		webpage.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o myset.o myset.cpp
 
-parsemd.o: src/parsemd.cpp src/pageparser.h \
-		src/myset.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o parsemd.o src/parsemd.cpp
+parsemd.o: parsemd.cpp pageparser.h \
+		myset.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o parsemd.o parsemd.cpp
 
-searcheng.o: src/searcheng.cpp src/searcheng.h \
-		src/webpage.h \
-		src/myset.h \
-		src/pageparser.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o searcheng.o src/searcheng.cpp
+searcheng.o: searcheng.cpp searcheng.h \
+		webpage.h \
+		myset.h \
+		pageparser.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o searcheng.o searcheng.cpp
 
-util.o: src/util.cpp src/util.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o util.o src/util.cpp
+util.o: util.cpp util.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o util.o util.cpp
 
-webpage.o: src/webpage.cpp src/webpage.h \
-		src/myset.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o webpage.o src/webpage.cpp
+webpage.o: webpage.cpp webpage.h \
+		myset.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o webpage.o webpage.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
