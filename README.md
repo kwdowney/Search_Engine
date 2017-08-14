@@ -17,4 +17,6 @@ e.g., user@computer~/path/to/files $ ./social_network data100/index.txt
 
 ###############
 
-![Alt text](/Images/se1.png?raw=true "Optional Title")
+![Alt text](/Images/se1.png?raw=true)
+![Alt text](/Images/se2.png?raw=true)
+![Alt text](/Images/se3.png?raw=true)
