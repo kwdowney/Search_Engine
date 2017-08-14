@@ -6,7 +6,6 @@ Project description: Program capable of searching through a provided database of
 
 Compile instructions:
 
-user@computer~/path/to/files $ qmake -project
 user@computer~/path/to/files $ qmake
 user@computer~/path/to/files $ make
 
@@ -17,3 +16,5 @@ Usage instructions: user@computer~/path/to/files $ ./social_network [/path/to/in
 e.g., user@computer~/path/to/files $ ./social_network data100/index.txt
 
 ###############
+
+![Alt text](/relative/path/to/img.jpg?raw=true "Optional Title")
