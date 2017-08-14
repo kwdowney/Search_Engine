@@ -17,4 +17,4 @@ e.g., user@computer~/path/to/files $ ./social_network data100/index.txt
 
 ###############
 
-![Alt text](/home/kwd/Programming/Search_Engine/Images/se1.png?raw=true "Optional Title")
+![Alt text](/Search_Engine/Images/se1.png?raw=true "Optional Title")
